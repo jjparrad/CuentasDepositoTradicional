@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface CuentasRepository extends JpaRepository<CuentasDeposito, String>{
-	//Double findBynumCuenta(String numCuenta);
+	
 }
