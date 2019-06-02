@@ -11,6 +11,11 @@ public class CuentasServices {
 
 	@Autowired
 	private CuentasRepository cuentasRepository;
+	
+	private String numeroDeCuenta;
+	private double saldoDeCuenta;
+	private double montoMovimiento;
+	private boolean resultadoMovimiento; 
 	/**
 	private String numeroDeCuenta;
 	private String tipoDeCuenta;
@@ -26,6 +31,24 @@ public class CuentasServices {
 	public Cuentas getBynumCuenta(String numCuenta) {
 		return cuentasRepository.findBynumeroDeCuenta(numCuenta);
 		//return null;
+	}
+	
+	public boolean servicioDebitarCuenta(String numCuenta, Double monto) {
+		numeroDeCuenta = numCuenta;
+		montoMovimiento = monto;
+		Cuentas cuentaActual = cuentasRepository.findBynumeroDeCuenta(numeroDeCuenta);
+		saldoDeCuenta = cuentaActual.getSaldoDeCuenta();
+		
+		if(saldoDeCuenta > montoMovimiento) {
+			saldoDeCuenta = saldoDeCuenta - montoMovimiento;
+			cuentaActual.setSaldoDeCuenta(saldoDeCuenta);
+			cuentasRepository.save(cuentaActual);
+			resultadoMovimiento = true;
+		}else {
+			resultadoMovimiento = false;
+		}
+		
+		return resultadoMovimiento;	
 	}
 	
 }
