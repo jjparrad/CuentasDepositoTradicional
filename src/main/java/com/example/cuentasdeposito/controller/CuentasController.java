@@ -1,46 +1,40 @@
 package com.example.cuentasdeposito.controller;
 
-import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.cuentasdeposito.model.Cuentas;
-import com.example.cuentasdeposito.model.CuentasDeposito;
 import com.example.cuentasdeposito.services.CuentasServices;
+import com.google.gson.*;
 
 
 @RestController
+@RequestMapping(value = "/cuentaDeDepositos")
 public class CuentasController {
 
 	@Autowired
 	private CuentasServices cuentasServices;
+	String numeroDeCuenta;
+	String tipoDeCuenta;
+	double saldoDeCuenta;
+	String estadoDeCuenta; 
+	String documentoIdentidad; 
+	String tipoDeDocumento;
+	String saldoDeCuentaString;
 	
-	@GetMapping("cuentaDeDepositos/cuentas/")
-	public List<CuentasDeposito> getCuentas() {
-		//return cuentasServices.findAll();
-		return null;
-	}
-	
-	@GetMapping("cuentaDeDepositos/nuevaCuenta/")
-	public String crearNuevaCuenta() {		
-		return "La cuenta ha sido creada";
-	}
-	
-	@GetMapping("cuentaDeDepositos/saldo/{numCuenta}")
-	public Double getSaldoCuenta(@PathVariable("numCuenta") String numCuenta ) {
+	@GetMapping("/saldo/{numCuenta}")
+	public @ResponseBody String getSaldoCuenta(@PathVariable("numCuenta") String numCuenta ) {
 		Cuentas cuentaActual = cuentasServices.getBynumCuenta(numCuenta);
-		return cuentaActual.getSaldoDeCuenta();
+		saldoDeCuenta = cuentaActual.getSaldoDeCuenta();
+		saldoDeCuentaString = String.format("%.2f",saldoDeCuenta);
+		JsonObject response = new JsonObject();
+		response.addProperty("numCuenta", numCuenta);
+		response.addProperty("saldo", saldoDeCuentaString);
+		return response.toString();
 	}
-	
-	/**
-	@GetMapping("cuentaDeDepositos/nuevaCuenta/")
-	public String crearNuevaCuenta(@RequestBody CuentasDeposito nuevaCuenta) {		
-		return "La cuenta ha sido creada";
-	}
-	 * @return 
-	**/
-	
 	
 }
