@@ -8,38 +8,43 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.cuentasdeposito.model.Cuentas;
 import com.example.cuentasdeposito.model.CuentasDeposito;
-import com.example.cuentasdeposito.repository.CuentasRepository;
+import com.example.cuentasdeposito.services.CuentasServices;
 
 
 @RestController
 public class CuentasController {
 
 	@Autowired
-	private CuentasRepository cuentasRepository;
-		
-	/**
-	@GetMapping("cuentaDeDepositos/saldo/{numCuenta}")
-	public List<CuentasDeposito> getSaldoCuenta(@PathVariable String numCuenta) {
-		//cuentasRepository.findById(numCuenta);
-		return cuentasRepository.findAll();
-	} 
-	**/
+	private CuentasServices cuentasServices;
 	
-	@GetMapping("cuentaDeDepositos/saldo/")
-	public String getCuentas() {
-		return "Funciona";
+	@GetMapping("cuentaDeDepositos/cuentas/")
+	public List<CuentasDeposito> getCuentas() {
+		//return cuentasServices.findAll();
+		return null;
 	}
-
+	
+	@GetMapping("cuentaDeDepositos/nuevaCuenta/")
+	public String crearNuevaCuenta() {		
+		return "La cuenta ha sido creada";
+	}
+	
+	@GetMapping("cuentaDeDepositos/saldo/{numCuenta}")
+	public Double getSaldoCuenta(@PathVariable("numCuenta") String numCuenta ) {
+		Optional<CuentasDeposito> cuentaActual = cuentasServices.getBynumCuenta(numCuenta);
+		System.out.println(cuentaActual);
+		//return cuentaActual.;
+		return 165464.123;
+	}
+	
 	/**
-	@GetMapping("cuentaDeDepositos/cuentas/{numCuenta}")
-	public Optional<CuentasDeposito> getSaldoCuenta(@PathVariable("numCuenta") String numCuenta ) {
-		return cuentasRepository.findById(numCuenta);
+	@GetMapping("cuentaDeDepositos/nuevaCuenta/")
+	public String crearNuevaCuenta(@RequestBody CuentasDeposito nuevaCuenta) {		
+		return "La cuenta ha sido creada";
 	}
 	 * @return 
 	**/
-	@GetMapping("cuentaDeDepositos/cuentas/")
-	public List<CuentasDeposito> getSaldoCuenta() {
-		return cuentasRepository.findAll();
-	}
+	
+	
 }
