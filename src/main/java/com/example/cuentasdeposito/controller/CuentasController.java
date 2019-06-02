@@ -1,8 +1,6 @@
 package com.example.cuentasdeposito.controller;
 
 import java.util.List;
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -32,10 +30,8 @@ public class CuentasController {
 	
 	@GetMapping("cuentaDeDepositos/saldo/{numCuenta}")
 	public Double getSaldoCuenta(@PathVariable("numCuenta") String numCuenta ) {
-		Optional<CuentasDeposito> cuentaActual = cuentasServices.getBynumCuenta(numCuenta);
-		System.out.println(cuentaActual);
-		//return cuentaActual.;
-		return 165464.123;
+		Cuentas cuentaActual = cuentasServices.getBynumCuenta(numCuenta);
+		return cuentaActual.getSaldoDeCuenta();
 	}
 	
 	/**
