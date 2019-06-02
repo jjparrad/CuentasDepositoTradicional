@@ -69,4 +69,28 @@ public class CuentasController {
 		
 	}
 	
+	@PutMapping("/acreditar/")
+	public ResponseEntity<?> acreditarCuenta(@RequestBody MovimientosCuentas body) {
+		numeroDeCuenta = body.getNumCuenta();
+		montoMovimiento = body.getMonto();
+		montoMovimientoString = String.format("%.2f",montoMovimiento);
+		
+		resultadoMovimiento = cuentasServices.servicioAcreditarCuenta(numeroDeCuenta, montoMovimiento);
+		
+		Cuentas cuentaActual = cuentasServices.getBynumCuenta(numeroDeCuenta);
+		saldoDeCuenta = cuentaActual.getSaldoDeCuenta();
+		saldoDeCuentaString = String.format("%.2f",saldoDeCuenta);
+		
+		if(resultadoMovimiento == true) {
+			JsonObject response = new JsonObject();
+			response.addProperty("numCuenta", numeroDeCuenta);
+			response.addProperty("cantidadAcreditada", montoMovimientoString);
+			response.addProperty("saldo", saldoDeCuentaString);
+			return new ResponseEntity<>(response.toString(), HttpStatus.OK);
+		}else {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		
+	}
+	
 }
