@@ -1,11 +1,7 @@
 package com.example.cuentasdeposito.controller;
 
-import javax.print.attribute.standard.Media;
-
-import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.cuentasdeposito.model.Cuentas;
 import com.example.cuentasdeposito.model.MovimientosCuentas;
 import com.example.cuentasdeposito.services.CuentasServices;
-import com.google.gson.*;
+import com.google.gson.JsonObject;
 
 
 @RestController
@@ -66,7 +62,7 @@ public class CuentasController {
 			response.addProperty("numCuenta", numeroDeCuenta);
 			response.addProperty("cantidadDebitada", montoMovimientoString);
 			response.addProperty("saldo", saldoDeCuentaString);
-			return new ResponseEntity<>(response.toString(), HttpStatus.ACCEPTED);
+			return new ResponseEntity<>(response.toString(), HttpStatus.OK);
 		}else {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}

@@ -1,9 +1,14 @@
 package com.example.cuentasdeposito.model;
 
 import java.io.Serializable;
+
+import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+@Entity
+@Table (name = "CuentasDeDeposito")
 public class Cuentas implements Serializable{
 
 	/**
@@ -18,15 +23,6 @@ public class Cuentas implements Serializable{
 	String estadoDeCuenta; 
 	String documentoIdentidad; 
 	String tipoDeDocumento;
-	
-	public Cuentas(String numeroDeCuenta,String tipoDeCuenta, double saldoDeCuenta, String estadoDeCuenta, String documentoIdentidad, String tipoDeDocumento) {
-		this.numeroDeCuenta = numeroDeCuenta;
-		this.tipoDeCuenta = tipoDeCuenta;
-		this.saldoDeCuenta = saldoDeCuenta;
-		this.estadoDeCuenta = estadoDeCuenta;
-		this.documentoIdentidad = documentoIdentidad;
-		this.tipoDeDocumento = tipoDeDocumento;
-	}
 
 	public String getNumeroDeCuenta() {
 		return numeroDeCuenta;
