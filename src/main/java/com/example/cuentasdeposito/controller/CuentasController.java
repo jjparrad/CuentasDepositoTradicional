@@ -64,7 +64,10 @@ public class CuentasController {
 			response.addProperty("saldo", saldoDeCuentaString);
 			return new ResponseEntity<>(response.toString(), HttpStatus.OK);
 		}else {
-			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+			JsonObject response = new JsonObject();
+			response.addProperty("numCuenta", numeroDeCuenta);
+			response.addProperty("saldo", saldoDeCuentaString);
+			return new ResponseEntity<>(response.toString(), HttpStatus.CREATED);
 		}
 		
 	}
@@ -87,7 +90,7 @@ public class CuentasController {
 			response.addProperty("cantidadAcreditada", montoMovimientoString);
 			response.addProperty("saldo", saldoDeCuentaString);
 			return new ResponseEntity<>(response.toString(), HttpStatus.OK);
-		}else {
+		}else {			
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		
