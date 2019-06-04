@@ -66,6 +66,7 @@ public class CuentasController {
 		}else {
 			JsonObject response = new JsonObject();
 			response.addProperty("numCuenta", numeroDeCuenta);
+			response.addProperty("cantidadDebitada", 0);
 			response.addProperty("saldo", saldoDeCuentaString);
 			return new ResponseEntity<>(response.toString(), HttpStatus.CREATED);
 		}
