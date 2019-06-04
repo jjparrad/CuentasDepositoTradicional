@@ -45,9 +45,9 @@ public class CuentasController {
 		return response.toString();
 	}
 	
-	@PutMapping("/debitar/")
-	public ResponseEntity<?> debitarCuenta(@RequestBody MovimientosCuentas body) {
-		numeroDeCuenta = body.getNumCuenta();
+	@PutMapping("/debitar/{numCuenta}")
+	public ResponseEntity<?> debitarCuenta(@RequestBody MovimientosCuentas body, @PathVariable("numCuenta") String numCuenta) {
+		numeroDeCuenta = numCuenta;
 		montoMovimiento = body.getMonto();
 		montoMovimientoString = String.format("%.2f",montoMovimiento);
 		
@@ -60,22 +60,22 @@ public class CuentasController {
 		if(resultadoMovimiento == true) {
 			JsonObject response = new JsonObject();
 			response.addProperty("numCuenta", numeroDeCuenta);
-			response.addProperty("cantidadDebitada", montoMovimientoString);
-			response.addProperty("saldo", saldoDeCuentaString);
+			response.addProperty("cantidadDebitada", montoMovimiento);
+			response.addProperty("saldo", saldoDeCuenta);
 			return new ResponseEntity<>(response.toString(), HttpStatus.OK);
 		}else {
 			JsonObject response = new JsonObject();
 			response.addProperty("numCuenta", numeroDeCuenta);
 			response.addProperty("cantidadDebitada", 0);
-			response.addProperty("saldo", saldoDeCuentaString);
+			response.addProperty("saldo", saldoDeCuenta);
 			return new ResponseEntity<>(response.toString(), HttpStatus.CREATED);
 		}
 		
 	}
 	
-	@PutMapping("/acreditar/")
-	public ResponseEntity<?> acreditarCuenta(@RequestBody MovimientosCuentas body) {
-		numeroDeCuenta = body.getNumCuenta();
+	@PutMapping("/acreditar/{numCuenta}")
+	public ResponseEntity<?> acreditarCuenta(@RequestBody MovimientosCuentas body, @PathVariable("numCuenta") String numCuenta) {
+		numeroDeCuenta = numCuenta;
 		montoMovimiento = body.getMonto();
 		montoMovimientoString = String.format("%.2f",montoMovimiento);
 		
@@ -88,8 +88,8 @@ public class CuentasController {
 		if(resultadoMovimiento == true) {
 			JsonObject response = new JsonObject();
 			response.addProperty("numCuenta", numeroDeCuenta);
-			response.addProperty("cantidadAcreditada", montoMovimientoString);
-			response.addProperty("saldo", saldoDeCuentaString);
+			response.addProperty("cantidadDebitada", montoMovimiento);
+			response.addProperty("saldo", saldoDeCuenta);
 			return new ResponseEntity<>(response.toString(), HttpStatus.OK);
 		}else {			
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
